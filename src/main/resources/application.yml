@@ -20,6 +20,10 @@ spring:
         smtp:
           socketFactory:
             class: javax.net.ssl.SSLSocketFactory
+  redis:
+    host: 120.78.70.121
+    port: 6379
+    database: 0
 
 
 mybatis-plus:

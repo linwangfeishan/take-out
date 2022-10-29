@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Queue;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
@@ -35,7 +36,14 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper,Orders> implemen
     private OrderDetailService orderDetailService;
 
 
+    @Override
+    public List<OrderDetail> getOrderDetailsByOrderId(Long orderId) {
+        LambdaQueryWrapper<OrderDetail> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(OrderDetail::getOrderId,orderId);
+        List<OrderDetail> list = orderDetailService.list(queryWrapper);
+        return list;
 
+    }
 
     @Transactional
     public void submit(Orders orders) {
@@ -103,9 +111,7 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper,Orders> implemen
 
         // 清空购物车数据
         shoppingCartService.remove(queryWrapper);
-
-
-
     }
+
 
 }
